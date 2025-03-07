@@ -4,20 +4,122 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: Digital;
+  src: url(fonts/Digital.otf);
+}
+
 body {
   min-height: 100vh;
   width: 100%;
 }
 
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: #d8ebff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.speak {
+  width: 160px;
+  margin-top: 10px;
+}
+
+.display {
+  background: rgb(248, 230, 193);
+  position: relative;
+  width: 80%;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 3px solid white;
+}
+
+.display::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border-radius: 5px;
+  border: 4px solid black;
+}
+
+#time {
+  font-family: "Digital";
+  display: flex;
+  font-size: 55px;
+  color: black;
+  margin-top: 2px;
+}
+
 .clock {
-  background-color: cornsilk;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: rgb(32, 32, 32);
+  border-radius: 25px;
+  color: white;
   width: 200px;
-  height: 200px;
+  height: 250px;
+}
+
+.buttons {
+  display: flex;
+  width: 80%;
+  gap: 5px;
+}
+
+button {
+  height: 37px;
+  font-size: 25px;
+  width: 100%;
+}
+
+#talk {
+  background-color: rgb(255, 72, 0);
+  border: none;
+  border-radius: 5px 5px 5px 20px;
+  width: 60%;
+}
+
+#alarm {
+  background-color: wheat;
+  border: none;
+  border-radius: 5px 5px 20px 5px;
+  width: 40%;
+}
+
+.text {
+  position: absolute;
+  z-index: 5;
+  top: 70%;
+  width: 100%;
+  display: flex;
+  justify-items: center;
 }
 
 h2 {
+  font-family: "Courier New", Courier, monospace;
+  margin: auto;
+  width: 300px;
   text-align: center;
+  padding: 10px;
+  background-color: aliceblue;
+  border: 2px solid black;
+  border-radius: 20px;
+  opacity: 0;
+  text-transform: uppercase;
 }
