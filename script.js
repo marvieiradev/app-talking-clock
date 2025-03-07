@@ -1,7 +1,8 @@
 var numHour = "";
 var numMinute = "";
+var count = 500;
 const basic = [
-  "",
+  "zero",
   "um",
   "dois",
   "três",
@@ -19,8 +20,8 @@ const complex = [
   "treze",
   "catorze",
   "quinze",
-  "desesseis",
-  "desesete",
+  "dezesseis",
+  "dezessete",
   "dezoito",
   "dezenove",
 ];
@@ -47,7 +48,7 @@ function getTextHours(numHour) {
       hour = basic[numHour];
     }
   }
-  return hour;
+  return numHour == 1 ? hour + " hora" : hour + " horas";
 }
 
 function getTextMinutes(numMinute) {
@@ -65,26 +66,72 @@ function getTextMinutes(numMinute) {
   } else {
     minute = basic[numMinute];
   }
-  return minute;
+  return numMinute == 1
+    ? minute + " minuto"
+    : numMinute == 0
+    ? ""
+    : minute + " minutos";
 }
 
-function showText() {
+async function showText() {
   let h = getTextHours(numHour);
   let m = getTextMinutes(numMinute);
-  texto = `
-  ${h} ${numHour == 1 ? "horas" : "horas"} ${numMinute >= 1 ? " e " : ""}${
-    numMinute >= 1 ? m : ""
-  } ${numMinute == 1 ? "minuto" : "minutos"}`;
-  document.getElementById("text-hours").innerText = texto;
-  setTimeout(clearText, 5000);
+  talkTime();
+  texto = `${h}${numMinute >= 1 ? " e " : ""}${m}`;
+  let text = document.getElementById("text-hours");
+  text.style.opacity = 1;
+  text.innerText = texto;
+  clearText();
 }
 
 function showTime() {
   numHour = new Date().getHours();
   numMinute = new Date().getMinutes();
-  document.getElementById("time").innerText = `${numHour}:${numMinute}`;
+  document.getElementById("time").innerText = `${numHour
+    .toString()
+    .padStart(2, "0")}:${numMinute.toString().padStart(2, "0")}`;
 }
 
-function clearText() {
-  document.getElementById("text-hours").innerText = "";
+async function talkTime() {
+  let h = getTextHours(numHour);
+  let m = getTextMinutes(numMinute);
+
+  let hours = h.split(" ");
+  let minutes = m.split(" ");
+
+  for (var i = 0; i < hours.length; i++) {
+    await wait(700);
+    talk(hours[i]);
+  }
+
+  if (numMinute > 0) {
+    await wait(600);
+    talk("e");
+
+    for (var i = 0; i < minutes.length; i++) {
+      await wait(600);
+      talk(minutes[i]);
+    }
+  }
+}
+
+function alarm() {
+  const audio = new Audio("audio/rooster.mp3");
+  audio.volume = 0.2;
+  audio.play();
+}
+
+function talk(hour) {
+  const audio = new Audio("audio/" + hour + ".mp3");
+  audio.volume = 1;
+  audio.play();
+}
+
+async function clearText() {
+  await wait(6000);
+  document.getElementById("text-hours").style.opacity = 0;
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
