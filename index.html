@@ -7,11 +7,29 @@
     <title>Relógio Falante</title>
   </head>
   <body>
-    <div class="clock">
-      <h1 id="time"></h1>
-      <button onclick="showText()">Mostrar Horas</button>
+    <div class="container">
+      <div class="clock">
+        <img src="images/speak.svg" alt="" class="speak" />
+        <div class="display">
+          <p id="time"></p>
+        </div>
+        <div class="buttons">
+          <button id="talk" onclick="showText()">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <button id="alarm" onclick="alarm()">
+            <i class="fa-solid fa-bell"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="text">
       <h2 id="text-hours"></h2>
     </div>
+    <script
+      src="https://kit.fontawesome.com/8e4a25e86e.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="script.js"></script>
   </body>
 </html>
