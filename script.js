@@ -1,6 +1,5 @@
-const numHour = new Date().getHours();
-const numMinute = new Date().getMinutes();
-
+var numHour = "";
+var numMinute = "";
 const basic = [
   "",
   "um",
@@ -13,7 +12,6 @@ const basic = [
   "oito",
   "nove",
 ];
-
 const complex = [
   "dez",
   "onze",
@@ -26,11 +24,12 @@ const complex = [
   "dezoito",
   "dezenove",
 ];
-
 const dozens = ["dez", "vinte", "trinta", "quarenta", "cinquenta"];
 
-function showHours() {
-  let hour = 1;
+window.setInterval(showTime, 1000);
+
+function getTextHours(numHour) {
+  let hour = 0;
   if (numHour >= 10 && numHour <= 19) {
     hour = complex[numHour - 10];
   } else if (numHour >= 20) {
@@ -40,13 +39,19 @@ function showHours() {
       hour = `${dozens[Math.floor(numHour / 10 - 1)]} e ${basic[numHour % 10]}`;
     }
   } else {
-    hour = basic[numHour];
+    if (numHour == 1) {
+      hour = "uma";
+    } else if (numHour == 2) {
+      hour = "duas";
+    } else {
+      hour = basic[numHour];
+    }
   }
   return hour;
 }
 
-function showMinutes() {
-  let minute = 1;
+function getTextMinutes(numMinute) {
+  let minute = 0;
   if (numMinute >= 10 && numMinute <= 19) {
     minute = complex[numMinute - 10];
   } else if (numMinute >= 20) {
@@ -64,13 +69,22 @@ function showMinutes() {
 }
 
 function showText() {
-  let h = showHours();
-  let m = showMinutes();
+  let h = getTextHours(numHour);
+  let m = getTextMinutes(numMinute);
   texto = `
   ${h} ${numHour == 1 ? "horas" : "horas"} ${numMinute >= 1 ? " e " : ""}${
     numMinute >= 1 ? m : ""
   } ${numMinute == 1 ? "minuto" : "minutos"}`;
-  document.getElementById("hours").innerText = texto;
+  document.getElementById("text-hours").innerText = texto;
+  setTimeout(clearText, 5000);
 }
 
-showText();
+function showTime() {
+  numHour = new Date().getHours();
+  numMinute = new Date().getMinutes();
+  document.getElementById("time").innerText = `${numHour}:${numMinute}`;
+}
+
+function clearText() {
+  document.getElementById("text-hours").innerText = "";
+}
